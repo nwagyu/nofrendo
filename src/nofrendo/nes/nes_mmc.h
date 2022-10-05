@@ -27,7 +27,9 @@
 #define _NES_MMC_H_
 
 #include <libsnss.h>
+#if AUDIO
 #include <nes_apu.h>
+#endif
 
 #define  MMC_LASTBANK      -1
 
@@ -55,7 +57,9 @@ typedef struct mapintf_s
    void (*set_state)(SnssMapperBlock *state);
    map_memread *mem_read;
    map_memwrite *mem_write;
+#if AUDIO
    apuext_t *sound_ext;
+#endif
 } mapintf_t;
 
 

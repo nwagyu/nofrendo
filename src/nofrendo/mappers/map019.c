@@ -132,7 +132,9 @@ mapintf_t map19_intf =
    map19_setstate, /* set state (snss) */
    NULL, /* memory read structure */
    map19_memwrite, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 /*

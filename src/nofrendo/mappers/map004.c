@@ -210,7 +210,9 @@ mapintf_t map4_intf =
    map4_setstate, /* set state (snss) */
    NULL, /* memory read structure */
    map4_memwrite, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 /*

@@ -94,7 +94,9 @@ mapintf_t map225_intf =
    NULL,                             /* Set state (SNSS) */
    NULL,                             /* Memory read structure */
    map225_memwrite,                  /* Memory write structure */
+#if AUDIO
    NULL                              /* External sound device */
+#endif
 };
 
 //225 and 255 are the same, according to https://wiki.nesdev.com/w/index.php/INES_Mapper_255
@@ -109,5 +111,7 @@ mapintf_t map255_intf =
    NULL,                             /* Set state (SNSS) */
    NULL,                             /* Memory read structure */
    map225_memwrite,                  /* Memory write structure */
+#if AUDIO
    NULL                              /* External sound device */
+#endif
 };

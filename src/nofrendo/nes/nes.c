@@ -32,7 +32,9 @@
 #include <osd.h>
 #include <gui.h>
 #include <nes.h>
+#if AUDIO
 #include <nes_apu.h>
+#endif
 #include <nes_ppu.h>
 #include <nes_rom.h>
 #include <nes_mmc.h>
@@ -65,7 +67,9 @@ nes_t *nes_getcontextptr(void)
 
 void nes_getcontext(nes_t *machine)
 {
+#if AUDIO
    apu_getcontext(nes.apu);
+#endif
    ppu_getcontext(nes.ppu);
    nes6502_getcontext(nes.cpu);
    mmc_getcontext(nes.mmc);
@@ -77,7 +81,9 @@ void nes_setcontext(nes_t *machine)
 {
    ASSERT(machine);
 
+#if AUDIO
    apu_setcontext(machine->apu);
+#endif
    ppu_setcontext(machine->ppu);
    nes6502_setcontext(machine->cpu);
    mmc_setcontext(machine->mmc);
@@ -110,13 +116,26 @@ static uint8 read_protect(uint32 address)
    return 0xFF;
 }
 
+#if AUDIO
+#else
+static uint8 null_read(uint32 address) {
+  return 0;
+}
+static void null_write(uint32 address, uint8 value) {
+}
+#endif
+
 #define  LAST_MEMORY_HANDLER  { -1, -1, NULL }
 /* read/write handlers for standard NES */
 static nes6502_memread default_readhandler[] =
 {
    { 0x0800, 0x1FFF, ram_read },
    { 0x2000, 0x3FFF, ppu_read },
+#if AUDIO
    { 0x4000, 0x4015, apu_read },
+#else
+   { 0x4000, 0x4015, null_read },
+#endif
    { 0x4016, 0x4017, ppu_readhigh },
    LAST_MEMORY_HANDLER
 };
@@ -125,8 +144,13 @@ static nes6502_memwrite default_writehandler[] =
 {
    { 0x0800, 0x1FFF, ram_write },
    { 0x2000, 0x3FFF, ppu_write },
+#if AUDIO
    { 0x4000, 0x4013, apu_write },
    { 0x4015, 0x4015, apu_write },
+#else
+   { 0x4000, 0x4013, null_write },
+   { 0x4015, 0x4015, null_write },
+#endif
    { 0x4014, 0x4017, ppu_writehigh },
    LAST_MEMORY_HANDLER
 };
@@ -152,6 +176,7 @@ static void build_address_handlers(nes_t *machine)
              sizeof(nes6502_memread));
    }
 
+#if AUDIO
    if (intf->sound_ext)
    {
       if (NULL != intf->sound_ext->mem_read)
@@ -166,6 +191,7 @@ static void build_address_handlers(nes_t *machine)
          }
       }
    }
+#endif
 
    if (NULL != intf->mem_read)
    {
@@ -201,6 +227,7 @@ static void build_address_handlers(nes_t *machine)
              sizeof(nes6502_memwrite));
    }
 
+#if AUDIO
    if (intf->sound_ext)
    {
       if (NULL != intf->sound_ext->mem_write)
@@ -215,6 +242,7 @@ static void build_address_handlers(nes_t *machine)
          }
       }
    }
+#endif
 
    if (NULL != intf->mem_write)
    {
@@ -362,7 +390,9 @@ void nes_emulate(void)
 {
    int last_ticks, frames_to_render;
 
+#if AUDIO
    osd_setsound(nes.apu->process);
+#endif
 
    last_ticks = osd_nofrendo_ticks();
    frames_to_render = 0;
@@ -421,7 +451,9 @@ void nes_reset(int reset_type)
          mem_trash(nes.rominfo->vram, 0x2000 * nes.rominfo->vram_banks);
    }
 
+#if AUDIO
    apu_reset();
+#endif
    ppu_reset(reset_type);
    mmc_reset();
    nes6502_reset();
@@ -439,7 +471,9 @@ void nes_destroy(nes_t **machine)
       rom_free(&(*machine)->rominfo);
       mmc_destroy(&(*machine)->mmc);
       ppu_destroy(&(*machine)->ppu);
+#if AUDIO
       apu_destroy(&(*machine)->apu);
+#endif
 //      bmp_destroy(&(*machine)->vidbuf);
       if ((*machine)->cpu)
       {
@@ -489,7 +523,9 @@ int nes_insertcart(const char *filename, nes_t *machine)
    if (NULL != machine->rominfo->vram)
       machine->ppu->vram_present = true;
 
+#if AUDIO
    apu_setext(machine->apu, machine->mmc->intf->sound_ext);
+#endif
 
    build_address_handlers(machine);
 
@@ -544,6 +580,7 @@ nes_t *nes_create(void)
    machine->cpu->read_handler = machine->readhandler;
    machine->cpu->write_handler = machine->writehandler;
 
+#if AUDIO
    /* apu */
    osd_getsoundinfo(&osd_sound);
    machine->apu = apu_create(0, osd_sound.sample_rate, NES_REFRESH_RATE, osd_sound.bps);
@@ -554,6 +591,7 @@ nes_t *nes_create(void)
    /* set the IRQ routines */
    machine->apu->irq_callback = nes_irq;
    machine->apu->irqclear_callback = nes_clearfiq;
+#endif
 
    /* ppu */
    machine->ppu = ppu_create();

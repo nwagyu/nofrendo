@@ -93,7 +93,9 @@ mapintf_t map229_intf =
    NULL,                             /* Set state (SNSS) */
    NULL,                             /* Memory read structure */
    map229_memwrite,                  /* Memory write structure */
+#if AUDIO
    NULL                              /* External sound device */
+#endif
 };
 
 /*

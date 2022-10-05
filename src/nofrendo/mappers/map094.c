@@ -52,7 +52,9 @@ mapintf_t map94_intf =
    NULL, /* set state (snss) */
    NULL, /* memory read structure */
    map94_memwrite, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 /*

@@ -120,7 +120,9 @@ mapintf_t map160_intf =
    NULL, /* set state (snss) */
    NULL, /* memory read structure */
    map160_memwrite, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 /*

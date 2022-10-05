@@ -360,7 +360,9 @@ mapintf_t map21_intf =
    map21_setstate, /* set state (snss) */
    NULL, /* memory read structure */
    map21_memwrite, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 mapintf_t map22_intf =
@@ -374,7 +376,9 @@ mapintf_t map22_intf =
    NULL, /* set state (snss) */
    NULL, /* memory read structure */
    map22_memwrite, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 mapintf_t map23_intf =
@@ -388,7 +392,9 @@ mapintf_t map23_intf =
    NULL, /* set state (snss) */
    NULL, /* memory read structure */
    map23_memwrite, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 mapintf_t map25_intf =
@@ -402,7 +408,9 @@ mapintf_t map25_intf =
    NULL, /* set state (snss) */
    NULL, /* memory read structure */
    map21_memwrite, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 /*

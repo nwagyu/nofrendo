@@ -27,7 +27,9 @@
 #include <nes_mmc.h>
 #include <nes.h>
 #include <log.h>
+#if AUDIO
 #include "mmc5_snd.h"
+#endif
 
 /* TODO: there's lots of info about this mapper now;
 ** let's implement it correctly/completely
@@ -271,7 +273,9 @@ mapintf_t map5_intf =
    map5_setstate, /* set state (snss) */
    map5_memread, /* memory read structure */
    map5_memwrite, /* memory write structure */
+#if AUDIO
    &mmc5_ext /* external sound device */
+#endif
 };
 /*
 ** $Log: map005.c,v $

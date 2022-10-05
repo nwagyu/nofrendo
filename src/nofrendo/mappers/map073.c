@@ -152,7 +152,9 @@ mapintf_t map73_intf =
    map73_setstate,                   /* Set state (SNSS) */
    NULL,                             /* Memory read structure */
    map73_memwrite,                   /* Memory write structure */
+#if AUDIO
    NULL                              /* External sound device */
+#endif
 };
 
 /*

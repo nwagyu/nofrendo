@@ -341,7 +341,6 @@ static int rom_getheader(unsigned char **rom, rominfo_t *rominfo)
 
    /* Read in the header */
 //   _fread(&head, 1, sizeof(head), fp);
-	printf("Head: %p (%x %x %x %x)\n", *rom, (*rom)[0], (*rom)[1], (*rom)[2], (*rom)[3]);
 	memcpy(&head, *rom, sizeof(head));
 	*rom+=sizeof(head);
 

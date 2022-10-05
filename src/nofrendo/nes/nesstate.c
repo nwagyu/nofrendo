@@ -148,6 +148,7 @@ static int save_sramblock(nes_t *state, SNSS_FILE *snssFile)
    return 0;
 }
 
+#if AUDIO
 static int save_soundblock(nes_t *state, SNSS_FILE *snssFile)
 {
    ASSERT(state);
@@ -182,6 +183,7 @@ static int save_soundblock(nes_t *state, SNSS_FILE *snssFile)
 
    return 0;
 }
+#endif
 
 static int save_mapperblock(nes_t *state, SNSS_FILE *snssFile)
 {
@@ -292,6 +294,7 @@ static void load_controllerblock(nes_t *state, SNSS_FILE *snssFile)
    UNUSED(snssFile);
 }
 
+#if AUDIO
 static void load_soundblock(nes_t *state, SNSS_FILE *snssFile)
 {
    int i;
@@ -304,6 +307,7 @@ static void load_soundblock(nes_t *state, SNSS_FILE *snssFile)
          apu_write(0x4000 + i, snssFile->soundBlock.soundRegisters[i]);
    }
 }
+#endif
 
 /* TODO: magic numbers galore */
 static void load_mapperblock(nes_t *state, SNSS_FILE *snssFile)
@@ -382,12 +386,14 @@ int state_save(void)
          goto _error;
    }
 
+#if AUDIO
    if (0 == save_soundblock(machine, snssFile))
    {
       status = SNSS_WriteBlock(snssFile, SNSS_SOUN);
       if (SNSS_OK != status)
          goto _error;
    }
+#endif
 
    if (0 == save_mapperblock(machine, snssFile))
    {
@@ -467,10 +473,11 @@ int state_load(void)
       case SNSS_CNTR:
          load_controllerblock(machine, snssFile);
          break;
-      
+#if AUDIO
       case SNSS_SOUN:
          load_soundblock(machine, snssFile);
          break;
+#endif
       
       case SNSS_UNKNOWN_BLOCK:
       default:

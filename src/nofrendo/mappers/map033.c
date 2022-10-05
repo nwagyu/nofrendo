@@ -104,7 +104,9 @@ mapintf_t map33_intf =
    NULL, /* set state (snss) */
    NULL, /* memory read structure */
    map33_memwrite, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 /*

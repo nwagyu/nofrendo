@@ -27,7 +27,9 @@
 #define _NES_H_
 
 #include <noftypes.h>
+#if AUDIO
 #include <nes_apu.h>
+#endif
 #include <nes_mmc.h>
 #include <nes_ppu.h>
 #include <nes_rom.h>
@@ -65,7 +67,9 @@ typedef struct nes_s
    nes6502_memwrite writehandler[MAX_MEM_HANDLERS];
 
    ppu_t *ppu;
+#if AUDIO
    apu_t *apu;
+#endif
    mmc_t *mmc;
    rominfo_t *rominfo;
 

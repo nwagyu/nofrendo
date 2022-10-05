@@ -27,7 +27,9 @@
 #include <nes_mmc.h>
 #include <nes.h>
 #include <log.h>
+#if AUDIO
 #include <vrcvisnd.h>
+#endif
 
 static struct
 {
@@ -182,7 +184,9 @@ mapintf_t map24_intf =
    map24_setstate, /* set state (snss) */
    NULL, /* memory read structure */
    map24_memwrite, /* memory write structure */
+#if AUDIO
    &vrcvi_ext /* external sound device */
+#endif
 };
 
 /*

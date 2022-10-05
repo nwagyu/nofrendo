@@ -171,7 +171,9 @@ mapintf_t map50_intf =
    map50_setstate,                   /* Set state (SNSS) */
    NULL,                             /* Memory read structure */
    map50_memwrite,                   /* Memory write structure */
+#if AUDIO
    NULL                              /* External sound device */
+#endif
 };
 
 /*

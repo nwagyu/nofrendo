@@ -171,7 +171,9 @@ mapintf_t map18_intf =
    map18_setstate, /* set state (snss) */
    NULL, /* memory read structure */
    map18_memwrite, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 /*

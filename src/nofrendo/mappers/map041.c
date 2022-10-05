@@ -146,7 +146,9 @@ mapintf_t map41_intf =
    map41_setstate,                   /* Set state (SNSS) */
    NULL,                             /* Memory read structure */
    map41_memwrite,                   /* Memory write structure */
+#if AUDIO
    NULL                              /* External sound device */
+#endif
 };
 
 /*

@@ -594,8 +594,6 @@ void gui_sendmsg(int color, char *format, ...)
    log_print("\n");
 #endif
 
-   printf("GUI: %s\n", msg.text);
-
    va_end(arg);
 
    msg.ttl = gui_refresh * 2; /* 2 second delay */

@@ -30,14 +30,20 @@
 
 char configfilename[]="na";
 
+int osd_init() {
+  return 0;
+}
+
+void osd_shutdown() {
+}
 
 /* This is os-specific part of main() */
-int osd_main(int argc, char *argv[])
-{
+int osd_main(int argc, char *argv[]) {
   config.filename = configfilename;
+  return main_loop("builtin", system_autodetect);
+}
 
-  printf("Running main loop for %s\n", argv[1]);
-  return main_loop(argv[1], system_autodetect);
+void osd_getmouse(int *x, int *y, int *button) {
 }
 
 /* File system interface */

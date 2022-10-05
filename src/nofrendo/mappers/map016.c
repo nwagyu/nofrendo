@@ -147,7 +147,9 @@ mapintf_t map16_intf =
    map16_setstate, /* set state (snss) */
    NULL, /* memory read structure */
    map16_memwrite, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 /*

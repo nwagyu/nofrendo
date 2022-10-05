@@ -131,7 +131,9 @@ mapintf_t map46_intf =
    map46_setstate,                   /* Set state (SNSS) */
    NULL,                             /* Memory read structure */
    map46_memwrite,                   /* Memory write structure */
+#if AUDIO
    NULL                              /* External sound device */
+#endif
 };
 
 /*

@@ -64,7 +64,9 @@ mapintf_t map87_intf =
    NULL,                             /* Set state (SNSS) */
    NULL,                             /* Memory read structure */
    map87_memwrite,                   /* Memory write structure */
+#if AUDIO
    NULL                              /* External sound device */
+#endif
 };
 
 /*

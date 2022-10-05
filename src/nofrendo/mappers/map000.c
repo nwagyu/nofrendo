@@ -37,7 +37,9 @@ mapintf_t map0_intf =
    NULL, /* set state (snss) */
    NULL, /* memory read structure */
    NULL, /* memory write structure */
+#if AUDIO
    NULL /* external sound device */
+#endif
 };
 
 /*

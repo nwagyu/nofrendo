@@ -112,5 +112,7 @@ mapintf_t map69_intf =
 	NULL, /* set state (snss) */
 	NULL, /* memory read structure */
 	map69_memwrite, /* memory write structure */
+#if AUDIO
 	NULL
+#endif
 };
