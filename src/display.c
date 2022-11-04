@@ -99,7 +99,7 @@ static void free_write(int num_dirties, rect_t *dirty_rects) {
 static void custom_blit(bitmap_t *bmp, int num_dirties, rect_t *dirty_rects) {
 	uint16_t line[bmp->width];
 	int xoffset = (EADK_SCREEN_WIDTH - bmp->width) / 2;
-	int yoffset = (EADK_SCREEN_HEIGTH - bmp->height) / 2;
+	int yoffset = (EADK_SCREEN_HEIGHT - bmp->height) / 2;
 
 	for(int y=0; y<bmp->height; y++) {
 		for(int x=0; x<bmp->width; x++) {
@@ -112,9 +112,9 @@ static void custom_blit(bitmap_t *bmp, int num_dirties, rect_t *dirty_rects) {
 void ppu_scanline_blit(uint8_t *bmp, int scanline, bool draw_flag) {
 	uint16_t line[NES_SCREEN_WIDTH];
 	const int xoffset = (EADK_SCREEN_WIDTH - NES_SCREEN_WIDTH) / 2;
-	const int yoffset = (EADK_SCREEN_HEIGTH - NES_SCREEN_HEIGHT) / 2;
+	const int yoffset = (EADK_SCREEN_HEIGHT - NES_SCREEN_HEIGHT) / 2;
 	bmp += 8;
-	if(draw_flag && !(scanline < 0 || scanline >= EADK_SCREEN_HEIGTH)) {
+	if(draw_flag && !(scanline < 0 || scanline >= EADK_SCREEN_HEIGHT)) {
 		for(int x=0; x<NES_SCREEN_WIDTH; x++) {
 			line[x] = myPalette[*bmp++];
 		}
